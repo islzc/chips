@@ -118,9 +118,9 @@ for k in d:
     list.append(tmp)
 print(list)
 ```
+> 返回截图  
+> ![](img/1.png)   
    
-   
-
 
 # 实践2: 把数据做成excel表格 (xlwt库)
 ```py
@@ -143,6 +143,9 @@ def createExcel():
     wk.save("qimaiData.xls")  # 生成excel文件 文件名为:qimaiData.xls
 createExcel()
 ```
+> 截图  
+> ![](img/2.png)   
+
 
 # 实践3: 把数据做成丰富的图表 (pyecharts库)
    > 柱状图  
@@ -152,18 +155,22 @@ createExcel()
    > 等等等一切excel图表都可以自动生成  
    > <font color="red">高级玩法: 透视表</font> 
 ```py
-#该示例代码是把前10的app的指数生成柱状图
+#该示例代码是把前5的app的指数生成柱状图
 #下面的 list 是实践1抓回来的list
 def creatEcharts():
-    #保留前10个app的搜索指数
-    topTen = {"xaxis": [], "hints": []}
+    #保留前5个app的数据
+    topTen = {"xaxis": [], "hints": [], "download": []}
     for x in range(0, len(list)):
-        if(x < 10):
+        if(x < 5):
             topTen["xaxis"].append(list[x]["name"]) #存放app名称
             topTen["hints"].append(list[x]["hints"]) #存放搜索指数
+            topTen["download"].append(float(list[x]["hints"])*1.5) #模拟数据
     bar = Bar()
     bar.add_xaxis(topTen["xaxis"]) #柱形图的x轴
-    bar.add_yaxis('指数', topTen["hints"]) #柱形图的y轴
+    bar.add_yaxis('搜索指数', topTen["hints"]) #柱形图的y轴
+    bar.add_yaxis('关键词覆盖数', topTen["download"])
     bar.render('snapshot.html')  # 生成echarts图 snapshot.html
 creatEcharts()
 ```
+> 截图  
+> ![](img/3.png)   
